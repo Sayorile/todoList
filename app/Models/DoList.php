@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class DoList extends Model
 {
-    protected $table =';
+    protected $table= "do_lists";
+    
+    protected $fillable =[
+        'id',
+        'name',
+        'description',
+        'status',
+        'progression',
+        'end',
+    ];
 }

@@ -8,6 +8,6 @@ class AccountController extends Controller
 {
     public function account()
     {
-        return view('connexion');
+        return view('account');
     }
 }

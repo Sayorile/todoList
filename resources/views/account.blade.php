@@ -23,4 +23,6 @@
 
     <body>
         <h1>Mon compte</h1>
+        <button type="submit" onclick="location.href='{{ route('todolist') }}'">Afficher la liste</button>
     </body>
+    </html>

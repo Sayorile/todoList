@@ -17,10 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/connexion', 'ConnexionController@connexion');
-Route::post('/connexion', 'ConnexionController@traitement');
+Route::get('/login', 'ConnexionController@connexion');
+Route::post('/login', 'ConnexionController@traitement');
 
 Route::get('/register', 'RegisterController@register');
 Route::post('/register', 'RegisterController@traitement');
 
 Route::get('/account','AccountController@account');
+
+Route::get('/todolist','TodolistController@list')->name('todolist');
+Route::post('/todolist', 'TodolistController@newtask');
+Route::put('/todolist/{id}', 'TodolistController@updatetask');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

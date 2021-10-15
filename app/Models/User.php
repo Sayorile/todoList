@@ -19,6 +19,7 @@ class User extends Model implements Authenticatable
      */
     protected $fillable = [
         'pseudo',
+        'email',
         'password',
     ];
 
