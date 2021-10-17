@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DoList extends Model
+class Categorie extends Model
 {
-    protected $table= "do_lists";
+    protected $table= "categories";
     protected $fillable =[
         'id',
         'name',
-        'description',
-        'status',
-        'progression',
-        'categorie',
-        'end',
+        'color',
     ];
 
     protected $primary_key = 'id';

@@ -10,12 +10,12 @@ class TodolistController extends Controller
 {
     public function list()
     {
-        $options = collect(["'in progress'", "'awaiting'","'new'","'abort'"]);
+        $optionssta = collect(["'in progress'", "'awaiting'","'new'","'abort'"]);
         $tasks = \App\Models\Dolist::all();
-        $idt= $tasks;
+        $optionscat = \App\Models\Categorie::all();
         return view('todolist', [
-            'tasks' => $tasks, 'options' => $options, 'idt' => $idt
-        ]);
+            'tasks' => $tasks, 'optionssta' => $optionssta, 'optionscat' => $optionscat]
+        );
     }
 
     public function newtask()
@@ -25,12 +25,13 @@ class TodolistController extends Controller
             $task->name = request('name');
             $task->description = request('description');
             $task->status = request('status');
+            $task->categorie = request('categorie');
             $task->save();
         } catch(\Illuminate\Database\QueryException $ex){
             dd($ex->getMessage());
             return redirect('/todolist'); 
         }
-
+        sleep(2);
         return redirect('/todolist');
     }
 
@@ -41,16 +42,41 @@ class TodolistController extends Controller
         }else{
             $end=0;
         }
-
-        $taskup =\App\Models\Dolist::where('id',$id)
+        try{
+            $taskup =\App\Models\Dolist::where('id',$id)
             ->update([
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
                 'progression' => $request->input('progression'),
+                'categorie' => $request->input('categorie'),
                 'end' => $end]
-                );
-        sleep(5);
+            );
+        } catch(Illuminate\Database\QueryException $ex){
+            dd($ex->getMessage());
+            return redirect('/todolist'); 
+        }
+        sleep(2);
         return redirect('/todolist');
+    }
+
+    public function deletetask (Request $request,$id)
+    {
+        try{
+            $taskdel =\App\Models\Dolist::where('id',$id)
+            ->delete();
+        } catch(Illuminate\Database\QueryException $ex){
+            dd($ex->getMessage());
+            return redirect('/todolist'); 
+        }
+        sleep(2);
+        return redirect('/todolist');
+    }
+
+    public static function stringToColorCode($str) {
+        
+        $code = dechex(crc32('#'.$str));
+        $code = substr($code, 0, 6);
+        return $code;
     }
 }

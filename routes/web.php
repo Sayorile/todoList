@@ -27,7 +27,9 @@ Route::get('/account','AccountController@account');
 
 Route::get('/todolist','TodolistController@list')->name('todolist');
 Route::post('/todolist', 'TodolistController@newtask');
-Route::get('/todolist/{id}', 'TodolistController@list');
-Route::post('/todolist/{id}', 'TodolistController@updatetask');
+Route::get('/todolist/update/{id}', 'TodolistController@list');
+Route::post('/todolist/update/{id}', 'TodolistController@updatetask');
+Route::get('/todolist/delete/{id}', 'TodolistController@list');
+Route::post('/todolist/delete/{id}', 'TodolistController@deletetask');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
