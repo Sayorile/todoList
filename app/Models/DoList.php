@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DoList extends Model
 {
     protected $table= "do_lists";
-    
     protected $fillable =[
         'id',
         'name',
@@ -17,4 +16,6 @@ class DoList extends Model
         'progression',
         'end',
     ];
+
+    protected $primary_key = 'id';
 }

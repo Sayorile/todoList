@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('todolist');
 });
 
 Route::get('/login', 'ConnexionController@connexion');
@@ -27,6 +27,7 @@ Route::get('/account','AccountController@account');
 
 Route::get('/todolist','TodolistController@list')->name('todolist');
 Route::post('/todolist', 'TodolistController@newtask');
-Route::put('/todolist/{id}', 'TodolistController@updatetask');
+Route::get('/todolist/{id}', 'TodolistController@list');
+Route::post('/todolist/{id}', 'TodolistController@updatetask');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

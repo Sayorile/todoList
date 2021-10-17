@@ -43,14 +43,14 @@
                 border-color:black;
                 text-align: center;
             }
-            .menu li{
+            .menu a {
                 display:inline-block;
                 
             }
-            .menu li:first-child{
+            .menu a:first-child{
                 margin-left:0;
             }
-            .menu li a {
+            .menu a input {
                 display: block;
                 font-size: 18px;
                 padding: 10px 10px;
@@ -61,12 +61,13 @@
                 transition: all 0.3s ease;
                 font-weight: 300;
             }
-            .menu li a:hover ,.menu li.active a{
+            .menu a input:hover ,.menu a.active input{
                 background:#2E2E2E;
                 color:#FFFF;
             }
-            #nav .current a {
+            #nav .current input {
                 color: black;
+                text-align: center;
             }
             .toggleMenu {
                 display:  none;
@@ -80,7 +81,7 @@
             .nav:after {
                 clear: both;
             }
-            .nav ul{
+            .nav p{
                 list-style: none;
                 margin-bottom: auto;
             }
@@ -95,36 +96,47 @@
                 @if(htmlspecialchars(request('Error')) == 1)
                 <a style="color:red;">ERREUR d'Ajout !</a>
                 @endif
-                <a class="toggleMenu"/>
+                <a class="toggleMenu"></a>
             @foreach($tasks as $task)
-
             <form action="/todolist/{{$task->id}}" method="post">
-                <ul class="nav" id="nav">
-                     @if($task->end == 0)
-                        <li class="nav-item"><label>Terminés</label><a><input type="checkbox" id="end" name="Terminés" /></a></li>
-                        
+            @csrf
+                <div class="nav" id="nav">
+                     @if($task->end == 0) 
+                     <a><label >Terminés</label><input class="nav-item"type="checkbox" id="end" name="end" ></input><a/>   
                     @else
-                        <li class="nav-item"><label >Terminés</label><a><input type="checkbox" id="end" name="Terminés" checked="1"></a></li>
+                    <a><label >Terminés</label><input class="nav-item" type="checkbox" id="end" name="end" checked></input><a/>
                     @endif
-                        <li class="nav-item"><label>Titre</label><a>{{$task->name}}</a></li>
-                        <li class="nav-item"><label>Description</label><a>{{$task->description}}</a></li>
-                        <li class="nav-item"><label>Status</label><a>{{$task->status}}</a></li>
-                        <li class="nav-item"><label>Progression</label><a>{{$task->progression}}%</a></li>
+                        <a><label>Titre</label>
+                        <input class="nav-item" name="name" value="{{$task->name}}" ></input><a/>
+                        <a><label>Description</label>
+                        <input class="nav-item" name="description" value="{{$task->description}}" ></input><a/>
+                        <a><label>Status</label>
+                        <select class="nav-item" name="status">
+                        @foreach ($options as $key)
+                        <option value="{{ $key }}"
+                        @if ($key == $task->status))
+                        selected="selected"
+                        @endif
+                         >{{ $key }}</option>
+                        @endforeach
+                        </select><a/>
+                        <a><label>Progression (%)</label>
+                        <input type="number" class="nav-item" name="progression" value="{{$task->progression}}" min="0" max="100"></input><a/>
                     <button class="button is-link" type="submit">Modifier</button>
             </form>     
-                </ul>
+                </div>
             @endforeach
                 <form action="/todolist" method="post">
             @csrf
                     <button class="button is-link" type="submit">Ajouter</button>
-                    <input type="text" name="name" placeholder="Titre">
-                    <input type="text" name="description" placeholder="Description">
-                    <select name="status">
+                    <a><input type="text" name="name" placeholder="Titre"></a>
+                    <a><input type="text" name="description" placeholder="Description"></a>
+                    <a><select name="status">
                         <option >'in progress'
                         <option>'awaiting'
                         <option selected>'new'
                         <option>'abort'
-                    </select>
+                    </select></a>
                 </form> 
                 <div class="clear"></div>      
         </div>
